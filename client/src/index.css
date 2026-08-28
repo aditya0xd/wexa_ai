@@ -1,1 +1,132 @@
 @import "tailwindcss";
+
+/* ============================================================
+   WEXA RISK OBSERVATORY — PROFESSIONAL FINANCE THEME
+   Bloomberg-style Sleek Dark Mode
+   ============================================================ */
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Sleek Dark Palette */
+  --color-bg-app: #0f111a;
+  --color-bg-panel: #161925;
+  --color-bg-panel-hover: #1e2233;
+  --color-border: #2a2f45;
+  --color-border-active: #3f4766;
+
+  /* Semantic Colors */
+  --color-status-healthy: #10b981;
+  --color-status-stressed: #f59e0b;
+  --color-status-defaulted: #ef4444;
+
+  /* Edge Types */
+  --color-edge-trades: #3b82f6;
+  --color-edge-collateral: #8b5cf6;
+  --color-edge-ownership: #f59e0b;
+
+  /* Text hierarchy */
+  --color-text-primary: #f3f4f6;
+  --color-text-secondary: #9ca3af;
+  --color-text-tertiary: #6b7280;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-app);
+  color: var(--color-text-primary);
+  min-height: 100dvh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100dvw;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Scrollbars ──────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-active);
+}
+
+/* ─── Panel Styles ────────────────────────────── */
+.panel {
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.panel-header {
+  border-bottom: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.data-row {
+  border-bottom: 1px solid var(--color-border);
+}
+.data-row:last-child {
+  border-bottom: none;
+}
+
+/* ─── Semantic Classes ──────────────────────────── */
+.text-healthy { color: var(--color-status-healthy); }
+.text-stressed { color: var(--color-status-stressed); }
+.text-defaulted { color: var(--color-status-defaulted); }
+
+.bg-healthy { background: rgba(16, 185, 129, 0.1); color: var(--color-status-healthy); border: 1px solid rgba(16, 185, 129, 0.2); }
+.bg-stressed { background: rgba(245, 158, 11, 0.1); color: var(--color-status-stressed); border: 1px solid rgba(245, 158, 11, 0.2); }
+.bg-defaulted { background: rgba(239, 68, 68, 0.1); color: var(--color-status-defaulted); border: 1px solid rgba(239, 68, 68, 0.2); }
+
+.font-mono { font-family: var(--font-mono); }
+.font-sans { font-family: var(--font-sans); }
+
+.telemetry {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+}
+
+/* Animations */
+@keyframes slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.25s ease-out forwards;
+}
+
+::selection {
+  background: var(--color-edge-trades);
+  color: #fff;
+}
