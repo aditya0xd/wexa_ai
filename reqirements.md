@@ -65,6 +65,3 @@ NFR6 — Documentation
 
 README includes: use-case explanation, "why graph database" argument, data model diagram, setup instructions (including CognoDB instance creation), explanation of the 2-3 main queries, screenshots
 
-NFR7 — Deployability
-
-Must be hosted on a free tier somewhere (Vercel/Render/Railway for frontend+backend); CognoDB instance kept alive until Wexa re
