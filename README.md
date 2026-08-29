@@ -2,7 +2,7 @@
 
 Visualize and simulate how a single counterparty default ripples through an interconnected financial trading network via direct exposure, shared collateral pools, and ownership structures.
 
-> A graph-powered risk observatory that lets non-technical users explore systemic contagion in real time.
+> A graph-powered risk observatory that lets users explore systemic contagion in real time.
 
 ---
 
@@ -27,20 +27,24 @@ Counterparty risk contagion is fundamentally a **network traversal problem**. Wh
 
 ```mermaid
 graph LR
-    subgraph Nodes
-        I["🏛 Institution<br/><i>id, name, type, tier, status, country</i>"]
-        CP["💎 CollateralPool<br/><i>id, name, assetClass</i>"]
+    subgraph "Institutions"
+        I1["🏛 Institution A<br/><i>id, name, type, tier,<br/>status, country</i>"]
+        I2["🏛 Institution B<br/><i>id, name, type, tier,<br/>status, country</i>"]
     end
 
-    subgraph Relationships
-        I -- "TRADES_WITH<br/><i>exposure: $amount</i>" --> I
-        I -- "POSTS_COLLATERAL" --> CP
-        I -- "OWNED_BY" --> I
-    end
+    CP["💎 CollateralPool<br/><i>id, name, assetClass</i>"]
 
-    style I fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    I1 -- "TRADES_WITH<br/>exposure: $amount" --> I2
+    I1 -- "POSTS_COLLATERAL" --> CP
+    I2 -- "POSTS_COLLATERAL" --> CP
+    I1 -- "OWNED_BY<br/>(subsidiary → parent)" --> I2
+
+    style I1 fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    style I2 fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
     style CP fill:#fef3c7,stroke:#d97706,color:#78350f
 ```
+
+*Institution A and B represent two instances of the same `Institution` label — relationships between institutions are peer-to-peer, not hierarchical node types.*
 
 ### Node Labels
 
@@ -55,16 +59,15 @@ graph LR
 |---|---|---|---|
 | `TRADES_WITH` | Institution → Institution | `exposure` (USD) | Bilateral trading/derivatives exposure |
 | `POSTS_COLLATERAL` | Institution → CollateralPool | — | Institution pledges assets to a shared pool |
-| `OWNED_BY` | Institution → Institution | — | Ownership/subsidiary relationship |
+| `OWNED_BY` | Institution → Institution (subsidiary → parent) | — | Ownership/subsidiary relationship |
 
 ### Dataset Scale
 
-- **25 Institutions** across 6 types (Banks, Hedge Funds, Brokers, Insurers, Corporates)
+- **25 Institutions** across 5 types (Banks, Hedge Funds, Brokers, Insurers, Corporates)
 - **12 Collateral Pools** across 4 asset classes
 - **40+ TRADES_WITH** relationships with realistic exposure amounts ($1M–$100M)
 - **30+ POSTS_COLLATERAL** relationships
 - **6 OWNED_BY** relationships
-
 ---
 
 ## Main Queries Explained
@@ -261,7 +264,7 @@ cd client && npm run build && npm run preview
 
 ## Live Demo
 
-> *TODO: Add hosted demo link here before submission.*
+[Wexa Live Demo on Vercel](https://client-jade-six-14.vercel.app/)
 
 ---
 
