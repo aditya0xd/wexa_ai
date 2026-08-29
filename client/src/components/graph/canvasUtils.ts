@@ -7,15 +7,15 @@ export const NODE_RADIUS = {
 } as const
 
 export const STATUS_COLOR = {
-  Healthy:  '#10b981', // Professional green
-  Stressed: '#f59e0b', // Professional amber
-  Defaulted:'#ef4444', // Professional red
+  Healthy:  '#10b981', // Green
+  Stressed: '#f59e0b', // Amber
+  Defaulted:'#ef4444', // Red
 } as const
 
 export const EDGE_COLOR = {
-  TRADES_WITH:      '#3b82f6', // Blue
-  POSTS_COLLATERAL: '#8b5cf6', // Purple
-  OWNED_BY:         '#f59e0b', // Amber
+  TRADES_WITH:      '#94a3b8', // Slate for direct trades
+  POSTS_COLLATERAL: '#8b5cf6', // Purple for collateral
+  OWNED_BY:         '#f59e0b', // Amber for ownership
 } as const
 
 export const HOP_COLOR: Record<number, string> = {
@@ -40,13 +40,15 @@ export function drawNode(
   const isPool = node.label === 'CollateralPool'
   const tier = node.tier as keyof typeof NODE_RADIUS
   const baseR = isPool ? NODE_RADIUS.CollateralPool : (NODE_RADIUS[tier] ?? NODE_RADIUS.Tier3)
-  const r = baseR / globalScale * 1.5
+  
+  // Scale radius naturally with zoom, but cap minimum screen size slightly so nodes remain selectable
+  const r = baseR
 
   const statusColor = isDefaulted
     ? STATUS_COLOR.Defaulted
     : hopDistance !== null
     ? HOP_COLOR[Math.min(hopDistance, 5)] ?? '#84cc16'
-    : (STATUS_COLOR[node.status as keyof typeof STATUS_COLOR] ?? '#3b82f6')
+    : (STATUS_COLOR[node.status as keyof typeof STATUS_COLOR] ?? '#94a3b8')
 
   const x = node.x ?? 0
   const y = node.y ?? 0
@@ -54,7 +56,7 @@ export function drawNode(
   // ── Highlight Ring ──
   if (isSelected || isDefaulted || hopDistance !== null) {
     ctx.beginPath()
-    ctx.arc(x, y, r * 1.4, 0, Math.PI * 2)
+    ctx.arc(x, y, r * 1.5, 0, Math.PI * 2)
     ctx.fillStyle = statusColor + (isSelected ? '40' : '20')
     ctx.fill()
   }
@@ -72,34 +74,36 @@ export function drawNode(
     ctx.arc(x, y, r, 0, Math.PI * 2)
   }
 
-  // Fill: Solid dark background
-  ctx.fillStyle = '#1e2233'
+  // Fill: Solid white background for light mode
+  ctx.fillStyle = '#ffffff'
   ctx.fill()
 
   // Border ring
   ctx.strokeStyle = statusColor
-  ctx.lineWidth = isSelected ? 3 / globalScale : 2 / globalScale
+  ctx.lineWidth = isSelected ? 3 : 1.5
   ctx.stroke()
 
   // ── Label ──
-  const labelScale = Math.max(0.6, Math.min(1, globalScale))
-  const fontSize = (isPool ? 7 : tier === 'Tier1' ? 9 : 8) / globalScale
-  ctx.font = `500 ${fontSize}px "Inter", sans-serif`
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
-  ctx.fillStyle = isSelected || isDefaulted ? '#fff' : '#9ca3af'
-  ctx.fillText(
-    node.name?.length > 15 ? node.name.slice(0, 14) + '…' : (node.name ?? node.id),
-    x,
-    y + r + fontSize * 1.5,
-  )
-
-  void labelScale
+  // Labels are readable when not too zoomed out
+  if (globalScale > 0.4) {
+    const fontSize = isPool ? 6 : tier === 'Tier1' ? 8 : 7
+    ctx.font = `600 ${fontSize}px "Inter", sans-serif`
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    
+    // Use dark slate for labels in light mode
+    ctx.fillStyle = isSelected || isDefaulted ? '#0f172a' : '#475569'
+    ctx.fillText(
+      node.name?.length > 15 ? node.name.slice(0, 14) + '…' : (node.name ?? node.id),
+      x,
+      y + r + fontSize * 1.2,
+    )
+  }
 }
 
 /**
  * Draw a relationship edge with professional colored stroke.
  */
 export function edgeColor(type: string): string {
-  return EDGE_COLOR[type as keyof typeof EDGE_COLOR] ?? 'rgba(255,255,255,0.2)'
+  return EDGE_COLOR[type as keyof typeof EDGE_COLOR] ?? '#cbd5e1'
 }

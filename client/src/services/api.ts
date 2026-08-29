@@ -36,8 +36,8 @@ async function fetchJson<T>(endpoint: string, options?: RequestInit): Promise<T>
 
 export const api = {
   // FR1: Get entire network graph
-  getNetwork: (): Promise<GraphResponse> => {
-    return fetchJson<GraphResponse>("/network");
+  getNetwork: (signal?: AbortSignal): Promise<GraphResponse> => {
+    return fetchJson<GraphResponse>("/network", { signal });
   },
 
   // FR2: Get single institution details & exposure

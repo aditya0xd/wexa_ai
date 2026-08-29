@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 /* ============================================================
-   WEXA RISK OBSERVATORY — PROFESSIONAL FINANCE THEME
-   Bloomberg-style Sleek Dark Mode
+   WEXA RISK OBSERVATORY — ENTERPRISE LIGHT THEME
+   Corporate Finance Aesthetic
    ============================================================ */
 
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* Sleek Dark Palette */
-  --color-bg-app: #0f111a;
-  --color-bg-panel: #161925;
-  --color-bg-panel-hover: #1e2233;
-  --color-border: #2a2f45;
-  --color-border-active: #3f4766;
+  /* Clean Light Palette */
+  --color-bg-app: #f8fafc;
+  --color-bg-panel: #ffffff;
+  --color-bg-panel-hover: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-active: #cbd5e1;
 
   /* Semantic Colors */
   --color-status-healthy: #10b981;
@@ -27,19 +27,15 @@
   --color-edge-ownership: #f59e0b;
 
   /* Text hierarchy */
-  --color-text-primary: #f3f4f6;
-  --color-text-secondary: #9ca3af;
-  --color-text-tertiary: #6b7280;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #94a3b8;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
@@ -70,23 +66,23 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: var(--color-border-active);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-border-active);
+  background: #94a3b8;
 }
 
 /* ─── Panel Styles ────────────────────────────── */
 .panel {
   background: var(--color-bg-panel);
   border: 1px solid var(--color-border);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
 .panel-header {
   border-bottom: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.02);
+  background: #f8fafc;
 }
 
 .data-row {
@@ -101,9 +97,9 @@ body {
 .text-stressed { color: var(--color-status-stressed); }
 .text-defaulted { color: var(--color-status-defaulted); }
 
-.bg-healthy { background: rgba(16, 185, 129, 0.1); color: var(--color-status-healthy); border: 1px solid rgba(16, 185, 129, 0.2); }
-.bg-stressed { background: rgba(245, 158, 11, 0.1); color: var(--color-status-stressed); border: 1px solid rgba(245, 158, 11, 0.2); }
-.bg-defaulted { background: rgba(239, 68, 68, 0.1); color: var(--color-status-defaulted); border: 1px solid rgba(239, 68, 68, 0.2); }
+.bg-healthy { background: rgba(16, 185, 129, 0.1); color: var(--color-status-healthy); border: 1px solid rgba(16, 185, 129, 0.3); }
+.bg-stressed { background: rgba(245, 158, 11, 0.1); color: var(--color-status-stressed); border: 1px solid rgba(245, 158, 11, 0.3); }
+.bg-defaulted { background: rgba(239, 68, 68, 0.1); color: var(--color-status-defaulted); border: 1px solid rgba(239, 68, 68, 0.3); }
 
 .font-mono { font-family: var(--font-mono); }
 .font-sans { font-family: var(--font-sans); }
